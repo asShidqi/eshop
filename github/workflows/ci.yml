@@ -12,10 +12,11 @@ jobs:
     steps:
       - name: Check out the Git repository
         uses: actions/checkout@v4
-
       - name: Set up Java toolchain
         uses: actions/setup-java@v4
         with:
           distribution: "temurin"
           java-version: "21"
+      - name: Run tests
+        run: ./gradlew test
 
