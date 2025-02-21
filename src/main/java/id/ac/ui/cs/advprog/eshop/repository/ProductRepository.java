@@ -22,8 +22,8 @@ public class ProductRepository {
         return productData.iterator();
     }
 
-    public void delete(Product product) {
-        productData.remove(product);
+    public boolean delete(Product product) {
+        return productData.remove(product);
     }
 
     public Product getProduct(String id){
@@ -37,9 +37,10 @@ public class ProductRepository {
         return null;
     }
 
-    public void update(String productId, String productName, int productQuantity) {
+    public Product edit(String productId, String productName, int productQuantity) {
         Product oldProduct = getProduct(productId);
         oldProduct.setProductName(productName);
         oldProduct.setProductQuantity(productQuantity);
+        return oldProduct;
     }
 }
