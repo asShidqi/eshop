@@ -20,6 +20,9 @@ jobs:
           distribution: "temurin"
           java-version: "21"
 
+      - name: Grant execute permission to Gradle wrapper
+        run: chmod +x gradlew
+
       - name: Run PMD
         run: ./gradlew pmdMain -Dversion.pmd=7.0.0-rc4
 
