@@ -114,4 +114,27 @@ class ProductRepositoryTest {
         boolean deleted = productRepository.delete(nonExistentProduct);
         assertFalse(deleted);
     }
+
+    @Test
+    void testGetProductById() {
+        Product product = new Product();
+        product.setProductName("Test Product");
+        product.setProductQuantity(10);
+
+        productRepository.create(product);
+        product.setProductId("1234");
+
+        Product foundProduct = productRepository.getProduct("1234");
+
+        assertNotNull(foundProduct);
+        assertEquals("1234", foundProduct.getProductId());
+        assertEquals("Test Product", foundProduct.getProductName());
+        assertEquals(10, foundProduct.getProductQuantity());
+    }
+
+    @Test
+    void testGetProductById_NotFound() {
+        Product foundProduct = productRepository.getProduct("non-existent-id");
+        assertNull(foundProduct);
+    }
 }
