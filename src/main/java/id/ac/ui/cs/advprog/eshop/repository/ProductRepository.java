@@ -36,4 +36,10 @@ public class ProductRepository {
         }
         return null;
     }
+
+    public void update(String productId, String productName, int productQuantity) {
+        Product oldProduct = getProduct(productId);
+        oldProduct.setProductName(productName);
+        oldProduct.setProductQuantity(productQuantity);
+    }
 }
