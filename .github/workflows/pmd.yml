@@ -1,0 +1,30 @@
+name: PMD Static Code Analysis
+
+on:
+  push:
+    branches:
+      - '**'  # Run on every branch
+  pull_request:
+
+jobs:
+  pmd:
+    name: Run PMD Analysis
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "21"
+
+      - name: Run PMD
+        run: ./gradlew pmdMain -Dversion.pmd=7.0.0-rc4
+
+      - name: Upload PMD Report (Artifacts)
+        uses: actions/upload-artifact@v4
+        with:
+          name: pmd-report
+          path: build/reports/pmd/
