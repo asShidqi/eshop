@@ -39,6 +39,7 @@ public class ProductRepository {
 
     public Product edit(String productId, String productName, int productQuantity) {
         Product oldProduct = getProduct(productId);
+        if(oldProduct == null) return null;
         oldProduct.setProductName(productName);
         oldProduct.setProductQuantity(productQuantity);
         return oldProduct;
