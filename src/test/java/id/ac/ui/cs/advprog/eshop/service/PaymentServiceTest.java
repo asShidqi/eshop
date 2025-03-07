@@ -59,4 +59,50 @@ public class PaymentServiceTest {
         assertEquals("REJECTED", payment.getStatus());
         assertEquals("FAILED", payment.getOrder().getStatus());
     }
+    @Test
+    void testAddPaymentWithValidCashOnDelivery() {
+        Map<String, String> paymentData = new HashMap<>();
+        paymentData.put("address", "Jl. Kebon Jeruk No.15");
+        paymentData.put("deliveryFee", "15000");
+
+        Payment payment = paymentService.addPayment(testOrder, "CASH_ON_DELIVERY", paymentData);
+
+        assertEquals("SUCCESS", payment.getStatus());
+        assertEquals("SUCCESS", payment.getOrder().getStatus());
+    }
+
+    @Test
+    void testAddPaymentWithInvalidCashOnDelivery() {
+        Map<String, String> paymentData = new HashMap<>();
+        paymentData.put("address", "");
+        paymentData.put("deliveryFee", "15000");
+
+        Payment payment = paymentService.addPayment(testOrder, "CASH_ON_DELIVERY", paymentData);
+
+        assertEquals("REJECTED", payment.getStatus());
+        assertEquals("FAILED", payment.getOrder().getStatus());
+    }
+    @Test
+    void testAddPaymentWithValidBankTransfer() {
+        Map<String, String> paymentData = new HashMap<>();
+        paymentData.put("bankName", "BCA");
+        paymentData.put("referenceCode", "REF1234567890");
+
+        Payment payment = paymentService.addPayment(testOrder, "BANK_TRANSFER", paymentData);
+
+        assertEquals("SUCCESS", payment.getStatus());
+        assertEquals("SUCCESS", payment.getOrder().getStatus());
+    }
+
+    @Test
+    void testAddPaymentWithInvalidBankTransfer() {
+        Map<String, String> paymentData = new HashMap<>();
+        paymentData.put("bankName", "BCA");
+        paymentData.put("referenceCode", "");
+
+        Payment payment = paymentService.addPayment(testOrder, "BANK_TRANSFER", paymentData);
+
+        assertEquals("REJECTED", payment.getStatus());
+        assertEquals("FAILED", payment.getOrder().getStatus());
+    }
 }
