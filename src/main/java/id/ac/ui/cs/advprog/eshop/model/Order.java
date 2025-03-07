@@ -10,12 +10,12 @@ import java.util.List;
 
 @Builder
 @Getter
+@Setter
 public class Order {
     String id;
     List<Product> products;
     Long orderTime;
     String author;
-    @Setter
     String status;
 
     public Order(String id, List<Product> products, Long orderTime, String author) {
