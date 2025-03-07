@@ -58,7 +58,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public Payment getPayment(String paymentId) {
-        return null;
+        return paymentRepository.findById(paymentId);
     }
 
     @Override
