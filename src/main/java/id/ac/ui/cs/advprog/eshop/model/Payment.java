@@ -13,6 +13,16 @@ public class Payment {
     private Map<String, String> paymentData;
 
     public Payment(String id, Order order, String method, Map<String, String> paymentData) {
+        this.id = id;
+        this.order = order;
+        this.method = method;
+
+        if (paymentData == null || paymentData.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+
+        this.paymentData = paymentData;
+        this.status = "PENDING";
     }
 
     public void setStatus(String status) {
