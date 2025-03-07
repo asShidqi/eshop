@@ -23,6 +23,6 @@ public class PaymentRepository {
     }
 
     public List<Payment> findAll() {
-        return null;
+        return new ArrayList<>(paymentData);
     }
 }
