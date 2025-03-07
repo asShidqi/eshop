@@ -26,7 +26,7 @@ public class PaymentServiceTest {
     void setUp() {
         orderRepository = new OrderRepository();
         paymentRepository = new PaymentRepository();
-        orderService = new OrderServiceImpl(orderRepository);
+        orderService = new OrderServiceImpl();
         paymentService = new PaymentServiceImpl(paymentRepository, orderService);
 
         List<Product> products = new ArrayList<>();

@@ -76,14 +76,50 @@ public class PaymentServiceImpl implements PaymentService {
         }
     }
 
+
     private boolean isValidVoucherCode(String code) {
-        return false;
+        if (code == null || code.length() != 16) {
+            return false;
+        }
+
+        if (!code.startsWith("ESHOP")) {
+            return false;
+        }
+
+        // Check if contains 8 numerical characters
+        int numCount = 0;
+        for (char c : code.toCharArray()) {
+            if (Character.isDigit(c)) {
+                numCount++;
+            }
+        }
+
+        return numCount == 8;
     }
 
     private void processCashOnDeliveryPayment(Payment payment) {
+        Map<String, String> data = payment.getPaymentData();
+        String address = data.get("address");
+        String deliveryFee = data.get("deliveryFee");
 
+        if (address == null || address.isEmpty() ||
+                deliveryFee == null || deliveryFee.isEmpty()) {
+            setStatus(payment, "REJECTED");
+        } else {
+            setStatus(payment, "SUCCESS");
+        }
     }
 
     private void processBankTransferPayment(Payment payment) {
+        Map<String, String> data = payment.getPaymentData();
+        String bankName = data.get("bankName");
+        String referenceCode = data.get("referenceCode");
+
+        if (bankName == null || bankName.isEmpty() ||
+                referenceCode == null || referenceCode.isEmpty()) {
+            setStatus(payment, "REJECTED");
+        } else {
+            setStatus(payment, "SUCCESS");
+        }
     }
 }
