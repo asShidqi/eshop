@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class PaymentServiceImpl implements PaymentService {
@@ -22,7 +23,24 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public Payment addPayment(Order order, String method, Map<String, String> paymentData) {
-        return null;
+        String paymentId = UUID.randomUUID().toString();
+        Payment payment = new Payment(paymentId, order, method, paymentData);
+
+        switch (method) {
+            case "VOUCHER_CODE":
+                processVoucherCodePayment(payment);
+                break;
+            case "CASH_ON_DELIVERY":
+                processCashOnDeliveryPayment(payment);
+                break;
+            case "BANK_TRANSFER":
+                processBankTransferPayment(payment);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid payment method");
+        }
+
+        return paymentRepository.save(payment);
     }
 
     @Override
