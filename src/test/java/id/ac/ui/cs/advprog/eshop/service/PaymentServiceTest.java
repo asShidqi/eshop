@@ -1,13 +1,19 @@
 package id.ac.ui.cs.advprog.eshop.service;
 
 import id.ac.ui.cs.advprog.eshop.model.Order;
+import id.ac.ui.cs.advprog.eshop.model.Payment;
 import id.ac.ui.cs.advprog.eshop.model.Product;
 import id.ac.ui.cs.advprog.eshop.repository.OrderRepository;
 import id.ac.ui.cs.advprog.eshop.repository.PaymentRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PaymentServiceTest {
     private PaymentService paymentService;
@@ -31,5 +37,26 @@ public class PaymentServiceTest {
         products.add(product);
 
         testOrder = orderService.createOrder(new Order("order123", products, 1708570000L, "Safira Sudrajat"));
+    }
+    @Test
+    void testAddPaymentWithValidVoucherCode() {
+        Map<String, String> paymentData = new HashMap<>();
+        paymentData.put("voucherCode", "ESHOP12345678ABCD");
+
+        Payment payment = paymentService.addPayment(testOrder, "VOUCHER_CODE", paymentData);
+
+        assertEquals("SUCCESS", payment.getStatus());
+        assertEquals("SUCCESS", payment.getOrder().getStatus());
+    }
+
+    @Test
+    void testAddPaymentWithInvalidVoucherCode() {
+        Map<String, String> paymentData = new HashMap<>();
+        paymentData.put("voucherCode", "INVALID123");
+
+        Payment payment = paymentService.addPayment(testOrder, "VOUCHER_CODE", paymentData);
+
+        assertEquals("REJECTED", payment.getStatus());
+        assertEquals("FAILED", payment.getOrder().getStatus());
     }
 }
