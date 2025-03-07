@@ -37,4 +37,10 @@ class PaymentTest {
         assertEquals(order, payment.getOrder());
         assertEquals("PENDING", payment.getStatus());
     }
+    @Test
+    void testCreatePaymentWithEmptyData() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Payment("payment123", order, "VOUCHER_CODE", null);
+        });
+    }
 }
