@@ -63,7 +63,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public List<Payment> getAllPayments() {
-        return null;
+        return paymentRepository.findAll();
     }
 
     private void processVoucherCodePayment(Payment payment) {
