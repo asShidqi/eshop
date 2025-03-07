@@ -1,0 +1,22 @@
+package id.ac.ui.cs.advprog.eshop.model;
+
+import org.junit.jupiter.api.BeforeEach;
+
+import java.util.ArrayList;
+import java.util.List;
+
+class PaymentTest {
+    private Order order;
+
+    @BeforeEach
+    void setUp() {
+        List<Product> products = new ArrayList<>();
+        Product product = new Product();
+        product.setProductId("a95586ef-1e39-46fe-9865-71afaafa3bda");
+        product.setProductName("Sampo Cap Bambang");
+        product.setProductQuantity(2);
+        products.add(product);
+
+        order = new Order("0f14d554-d12d-4c97-b65d-feeb17bfd7bb", products, 17085A6D001L, "Safira Sudrajat");
+    }
+}
