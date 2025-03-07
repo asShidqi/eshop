@@ -67,7 +67,13 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     private void processVoucherCodePayment(Payment payment) {
+        String voucherCode = payment.getPaymentData().get("voucherCode");
 
+        if (isValidVoucherCode(voucherCode)) {
+            setStatus(payment, "SUCCESS");
+        } else {
+            setStatus(payment, "REJECTED");
+        }
     }
 
     private boolean isValidVoucherCode(String code) {
